@@ -3,10 +3,13 @@ package yang.com.library_system.ui;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.litepal.crud.DataSupport;
 
@@ -19,11 +22,13 @@ import yang.com.library_system.data.Book;
 import yang.com.library_system.utils.ActionIntent;
 
 public class LookActivity extends AppCompatActivity {
-    private List bookList=new ArrayList<>();
+    private List<Book> bookList = new ArrayList<>();
     private TextView noBook;
     private ImageView back;
+    private BookAdapter adapter;
     private RecyclerView recyclerView;
     private TextView textTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,27 +41,55 @@ public class LookActivity extends AppCompatActivity {
                 finish();
             }
         });
-        String user = getIntent().getStringExtra("user");
-        if (ActionIntent.a){
+        final String user = getIntent().getStringExtra("user");
+        if (ActionIntent.a) {
             String name = getIntent().getStringExtra("book_name");
-            bookList = init_data_2(user,name);
-        }
-        else {
+            bookList = init_data_2(user, name);
+        } else {
             bookList = init_data(user);
         }
         ActionIntent.a = false;
         if (bookList.size() != 0) {
             noBook.setVisibility(View.GONE);
-            LinearLayoutManager layoutManager=new LinearLayoutManager(getBaseContext());
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getBaseContext());
             recyclerView.setLayoutManager(layoutManager);
-            BookAdapter adapter=new BookAdapter(bookList);
+            adapter = new BookAdapter(bookList);
+            adapter.setOnItemClickListener(new BookAdapter.OnItemClickListener() {
+
+
+                @Override
+                public void onClick(View view, int position) {
+
+                }
+                @Override
+                public void onLongClick(View view, int position) {
+                    showPopMenu(view,position);
+                    String user = bookList.get(position).getUser();
+                    int id = bookList.get(position).getId();
+                    DataSupport.deleteAll(Book.class,"user = ? and id = ?",user,String.valueOf(id));
+                }
+            });
             recyclerView.setAdapter(adapter);
-        }
-        else {
+        } else {
             recyclerView.setVisibility(View.INVISIBLE);
         }
 
+
     }
+
+    public void showPopMenu(View view, final int pos) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_item, popupMenu.getMenu());
+        popupMenu.show();
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                adapter.removeItem(pos);
+                return false;
+            }
+        });
+
+}
     private List init_data_2(String user,String name){
         List<Book> List = DataSupport.where("user = ? and name = ?", user,name).find(Book.class);
         return  List;

@@ -2,6 +2,7 @@ package yang.com.library_system.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -59,6 +60,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 String name = book_name.getText().toString();
                 String author = book_author.getText().toString();
                 String user = getIntent().getStringExtra("user");
+                Log.d("yyj", "onClick: "+1+user+name);
                 if (name.length() == 0 ) {
                     AlerDialogUtil.generateBookNameAlerDialog(view);
                 }
@@ -70,7 +72,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 else {
                     List<Book> books = DataSupport.where("user = ? and name = ?",user,name).find(Book.class);
-                        if (books.size() >= 0) {
+                        if (books.size() > 0) {
                             AlerDialogUtil.generateHasBookAlerDialog(view);
                         }
                     else {

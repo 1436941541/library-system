@@ -3,6 +3,7 @@ package yang.com.library_system.ui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -22,8 +23,8 @@ import yang.com.library_system.utils.AlerDialogUtil;
 public class OperatingActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView textView;
     private ImageView back;
-    private long now=0;
-    private static boolean b=false;//用来判断是否存已经存在了该用户的数据库
+    private long now = 0;
+    private static boolean b = false;//用来判断是否存已经存在了该用户的数据库
     private RelativeLayout book_set;
     private RelativeLayout book_add;
     private RelativeLayout book_update;
@@ -93,6 +94,7 @@ public class OperatingActivity extends AppCompatActivity implements View.OnClick
                     String user = getIntent().getStringExtra("user");
                     Intent intent = new Intent(getBaseContext(),AddActivity.class);
                     intent.putExtra("user",user);
+                    Log.d("yyj", "onClick: "+user);
                     startActivity(intent);
                 }
                 else {
