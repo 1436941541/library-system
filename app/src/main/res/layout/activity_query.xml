@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_query"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#C0C0C0"
+    tools:context="yang.com.library_system.ui.QueryActivity">
+    <include layout="@layout/head_text_view"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+    <EditText
+        android:id="@+id/query_book_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="15dp"
+        android:textSize="30sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:hint="请输入书名"
+        android:background="@drawable/edit_text_selector"
+        android:maxLines="1"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <Button
+        android:id="@+id/query_is_ok"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="25sp"
+        android:layout_width="match_parent"
+        android:text="搜索"
+        android:background="@drawable/button_focused"
+        android:layout_height="wrap_content" />
+</LinearLayout>

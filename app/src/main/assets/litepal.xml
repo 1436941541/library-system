@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="Clients" />
+    <version value="3" />
+    <list>
+        <mapping class="yang.com.library_system.data.Client"/>
+        <mapping class="yang.com.library_system.data.Book"/>
+    </list>
+</litepal>
